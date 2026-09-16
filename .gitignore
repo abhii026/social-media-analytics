@@ -3,7 +3,14 @@ venv/
 .venv/
 __pycache__/
 *.py[cod]
+*$py.class
 .ipynb_checkpoints/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
 
 # Environment / secrets
 .env
@@ -13,16 +20,24 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# Data
+# Browser & Scraper Profiles / User Data
+twitter_user_data/
+
+# Data (Datasets excluded from Git tracking)
+*.parquet
 data/raw/*
 data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
+data/x/processed/*
+!data/**/.gitkeep
 
 # OS
 .DS_Store
 Thumbs.db
+ehthumbs.db
 
-# Logs
+# Logs & Temporary Files
 *.log
+*.tmp
