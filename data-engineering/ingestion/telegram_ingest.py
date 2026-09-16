@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -7,10 +8,18 @@ import requests
 import mysql.connector
 from dotenv import load_dotenv
 
-
 # Load .env from project root
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
+
+# Ensure project root is on sys.path so analytics module can be imported
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.append(str(PROJECT_ROOT))
+
+try:
+    from analytics.processor import run_full_pipeline
+except ImportError:
+    run_full_pipeline = None
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
@@ -54,7 +63,7 @@ def save_message(message):
     text = message.get("text", "")
 
     if not text:
-        return
+        return False
 
     timestamp = datetime.fromtimestamp(
         message["date"], tz=timezone.utc
@@ -65,8 +74,8 @@ def save_message(message):
 
     query = """
         INSERT IGNORE INTO posts
-        (post_id, platform, user_id, text, timestamp, likes, comments, shares)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        (post_id, platform, user_id, text, timestamp, likes, comments, shares, data_type, source_name)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     values = (
@@ -78,16 +87,34 @@ def save_message(message):
         0,
         0,
         0,
+        "TEST_DATA",
+        "DevOrbit Ingestion Bot",
     )
 
     cursor.execute(query, values)
-    connection.commit()
+    inserted = cursor.rowcount > 0
 
+    if inserted:
+        # Update sources table for test bot
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
+        cursor.execute("""
+            UPDATE sources
+            SET messages_collected = messages_collected + 1,
+                last_collected_message = %s,
+                last_sync_time = %s,
+                access_status = 'TEST_ONLY'
+            WHERE source_id = 'telegram_test_bot';
+        """, (text[:500], now))
+
+    connection.commit()
     cursor.close()
     connection.close()
 
-    print(f"New Telegram message saved: {post_id}")
-    print(f"Text: {text}")
+    if inserted:
+        print(f"New Telegram test message saved: {post_id}")
+        print(f"Text: {text}")
+        return True
+    return False
 
 
 def main():
@@ -114,13 +141,23 @@ def main():
                 time.sleep(5)
                 continue
 
+            new_messages_count = 0
             for update in data["result"]:
                 offset = update["update_id"] + 1
 
                 message = update.get("message")
 
                 if message:
-                    save_message(message)
+                    if save_message(message):
+                        new_messages_count += 1
+
+            # Automatically run analytics pipeline on newly arrived messages
+            if new_messages_count > 0 and run_full_pipeline:
+                try:
+                    print(f"Triggering analytics pipeline for {new_messages_count} new message(s)...")
+                    run_full_pipeline()
+                except Exception as analytics_err:
+                    print("Analytics pipeline error:", analytics_err)
 
         except requests.RequestException as error:
             print("Telegram connection error:", error)
