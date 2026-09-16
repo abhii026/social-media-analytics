@@ -1,0 +1,125 @@
+.stat-card {
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-card.accent-cyan::before {
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+}
+
+.stat-card.accent-purple::before {
+  background: linear-gradient(90deg, var(--accent-purple), transparent);
+}
+
+.stat-card.accent-emerald::before {
+  background: linear-gradient(90deg, var(--accent-emerald), transparent);
+}
+
+.stat-card.accent-rose::before {
+  background: linear-gradient(90deg, var(--accent-rose), transparent);
+}
+
+.stat-card.accent-amber::before {
+  background: linear-gradient(90deg, var(--accent-amber), transparent);
+}
+
+.stat-card.accent-blue::before {
+  background: linear-gradient(90deg, var(--accent-blue), transparent);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.stat-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-icon.cyan {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+}
+
+.stat-card-icon.purple {
+  background: var(--accent-purple-dim);
+  color: var(--accent-purple);
+}
+
+.stat-card-icon.emerald {
+  background: var(--accent-emerald-dim);
+  color: var(--accent-emerald);
+}
+
+.stat-card-icon.rose {
+  background: var(--accent-rose-dim);
+  color: var(--accent-rose);
+}
+
+.stat-card-icon.amber {
+  background: var(--accent-amber-dim);
+  color: var(--accent-amber);
+}
+
+.stat-card-icon.blue {
+  background: var(--accent-blue-dim);
+  color: var(--accent-blue);
+}
+
+.stat-card-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+.stat-card-change.up {
+  background: var(--accent-emerald-dim);
+  color: var(--accent-emerald);
+}
+
+.stat-card-change.down {
+  background: var(--accent-rose-dim);
+  color: var(--accent-rose);
+}
+
+.stat-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.stat-card-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}

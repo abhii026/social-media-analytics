@@ -1,0 +1,48 @@
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.platform-badge.twitter {
+  background: rgba(34, 211, 238, 0.12);
+  color: #22d3ee;
+}
+
+.platform-badge.telegram {
+  background: rgba(96, 165, 250, 0.12);
+  color: #60a5fa;
+}
+
+.platform-badge.instagram {
+  background: rgba(251, 113, 133, 0.12);
+  color: #fb7185;
+}
+
+.platform-badge.reddit {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+
+.platform-badge.youtube {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+}
+
+.platform-badge.facebook {
+  background: rgba(96, 165, 250, 0.12);
+  color: #60a5fa;
+}
+
+.platform-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}

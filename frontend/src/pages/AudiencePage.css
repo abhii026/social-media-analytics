@@ -1,0 +1,165 @@
+.audience-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.audience-header h1 {
+  font-size: 1.6rem;
+  margin-bottom: 2px;
+}
+
+.audience-header-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.audience-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* Geo Table */
+.geo-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.geo-table td {
+  padding: 10px var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.geo-table tr:last-child td {
+  border-bottom: none;
+}
+
+.geo-table tr {
+  transition: background var(--transition-fast);
+}
+
+.geo-table tr:hover {
+  background: rgba(148, 163, 184, 0.04);
+}
+
+.geo-flag {
+  font-size: 1.4rem;
+  margin-right: var(--space-sm);
+}
+
+.geo-country {
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.geo-users {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.geo-bar-wrap {
+  width: 120px;
+  height: 6px;
+  background: rgba(148, 163, 184, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.geo-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  transition: width 1s ease-out;
+}
+
+.geo-percentage {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+/* Interest Bars */
+.interest-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.interest-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.interest-label {
+  min-width: 130px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.interest-bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: rgba(148, 163, 184, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.interest-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s ease-out;
+}
+
+.interest-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Heatmap */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+  gap: 4px;
+  font-size: 0.72rem;
+}
+
+.heatmap-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  transition: transform var(--transition-fast);
+  cursor: default;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.15);
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .audience-charts-row {
+    grid-template-columns: 1fr;
+  }
+}
